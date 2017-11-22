@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -39,7 +38,6 @@
             this.btnEnglish = new System.Windows.Forms.Button();
             this.btnEspañol = new System.Windows.Forms.Button();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +71,7 @@
             this.txtPassword.Size = new System.Drawing.Size(150, 29);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.Tag = "txtPassword";
-            this.txtPassword.Text = "Password";
+            this.txtPassword.Text = "Molina92";
             this.txtPassword.UseSystemPasswordChar = true;
             this.txtPassword.UseWaitCursor = true;
             this.txtPassword.Click += new System.EventHandler(this.txtPassword_Click);
@@ -89,7 +87,7 @@
             this.txtUsername.Size = new System.Drawing.Size(150, 29);
             this.txtUsername.TabIndex = 1;
             this.txtUsername.Tag = "txtName";
-            this.txtUsername.Text = "Username";
+            this.txtUsername.Text = "dmolinag92";
             this.txtUsername.Click += new System.EventHandler(this.txtUsername_Click);
             // 
             // btnCreateUser
@@ -165,11 +163,6 @@
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
-            // timer1
-            // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,7 +192,6 @@
         private System.Windows.Forms.Button btnFrench;
         private System.Windows.Forms.Button btnEnglish;
         private System.Windows.Forms.Button btnEspañol;
-        private System.Windows.Forms.Timer timer1;
     }
 }
 

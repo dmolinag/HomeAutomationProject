@@ -8,8 +8,7 @@ using System.Security.Cryptography;
 namespace DomoticProject.Controllers.LogicBusiness.Global
 {
     class PasswordSecurity
-    
-  {
+        {
         /// <summary>
         /// The shared hmac password is created only once and hardcoded
         /// </summary>
@@ -22,12 +21,10 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
             0x67, 0x4b, 0x26, 0xe7, 0x84, 0x36, 0x4c, 0x46, 0x94, 0xb7,
             0x72, 0xa0, 0xbf, 0x05 };
 
-
         /// <summary>
         /// Number of iterations that  HMAC will be computed
         /// </summary>
         const int iteration = 100000;
-
 
         /// <summary>
         /// Generates the random salt of 32 bytes.

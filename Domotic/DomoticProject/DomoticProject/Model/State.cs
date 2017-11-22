@@ -12,18 +12,18 @@ namespace DomoticProject.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Topic
+    public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Topic()
+        public State()
         {
-            this.DeviceTopic = new HashSet<DeviceTopic>();
+            this.DeviceState = new HashSet<DeviceState>();
         }
     
-        public int TopicID { get; set; }
-        public string TopicName { get; set; }
+        public int StateId { get; set; }
+        public bool State1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeviceTopic> DeviceTopic { get; set; }
+        public virtual ICollection<DeviceState> DeviceState { get; set; }
     }
 }

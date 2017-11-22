@@ -15,9 +15,7 @@ namespace HomeAutomation.Response
 
         [DataMember]
         public List<UserDto> ReturnValue { get; set; }
-
     }
-
 }
 
 
@@ -34,7 +32,6 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
 
         [DataMember]
         public List<T> ReturnValue { get; set; }
-
     }
 
     public enum ResponseCode

@@ -17,7 +17,7 @@ namespace DomoticProject.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Device()
         {
-            this.DeviceTopic = new HashSet<DeviceTopic>();
+            this.DeviceState = new HashSet<DeviceState>();
             this.RoomDevice = new HashSet<RoomDevice>();
         }
     
@@ -25,11 +25,10 @@ namespace DomoticProject.Model
         public string Device1 { get; set; }
         public Nullable<int> UnitID { get; set; }
         public Nullable<int> TimeOn { get; set; }
-        public Nullable<bool> State { get; set; }
     
         public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeviceTopic> DeviceTopic { get; set; }
+        public virtual ICollection<DeviceState> DeviceState { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomDevice> RoomDevice { get; set; }
     }

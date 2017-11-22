@@ -7,16 +7,15 @@
     <Property Name="DeviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Device" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="UnitID" Type="int" />
-    <Property Name="State" Type="bit" />
     <Property Name="TimeOn" Type="int" />
   </EntityType>
-  <EntityType Name="DeviceTopic">
+  <EntityType Name="DeviceState">
     <Key>
-      <PropertyRef Name="DeviceTopicID" />
+      <PropertyRef Name="DeviceStateId" />
     </Key>
-    <Property Name="DeviceTopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DeviceID" Type="int" Nullable="false" />
-    <Property Name="TopicID" Type="int" Nullable="false" />
+    <Property Name="DeviceStateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeviceId" Type="int" Nullable="false" />
+    <Property Name="StateId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -41,6 +40,17 @@
     <Property Name="RoomDeviceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoomID" Type="int" Nullable="false" />
     <Property Name="DeviceID" Type="int" Nullable="false" />
+    <Property Name="StateID" Type="int" Nullable="false" />
+    <Property Name="Value" Type="int" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="OnTime" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="State" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -51,13 +61,6 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
-  <EntityType Name="Topic">
-    <Key>
-      <PropertyRef Name="TopicID" />
-    </Key>
-    <Property Name="TopicID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TopicName" Type="varchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="Unit">
     <Key>
@@ -104,27 +107,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DeviceTopic_Device">
+  <Association Name="FK_DeviceState_Device">
     <End Role="Device" Type="Self.Device" Multiplicity="1" />
-    <End Role="DeviceTopic" Type="Self.DeviceTopic" Multiplicity="*" />
+    <End Role="DeviceState" Type="Self.DeviceState" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Device">
         <PropertyRef Name="DeviceID" />
       </Principal>
-      <Dependent Role="DeviceTopic">
-        <PropertyRef Name="DeviceID" />
+      <Dependent Role="DeviceState">
+        <PropertyRef Name="DeviceId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DeviceTopic_Topic">
-    <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
-    <End Role="DeviceTopic" Type="Self.DeviceTopic" Multiplicity="*" />
+  <Association Name="FK_DeviceState_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="DeviceState" Type="Self.DeviceState" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Topic">
-        <PropertyRef Name="TopicID" />
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
       </Principal>
-      <Dependent Role="DeviceTopic">
-        <PropertyRef Name="TopicID" />
+      <Dependent Role="DeviceState">
+        <PropertyRef Name="StateId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -176,17 +179,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetDeviceByRoomIdAndDeviceID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomID" Type="int" Mode="In" />
+    <Parameter Name="DeviceID" Type="int" Mode="In" />
+  </Function>
   <Function Name="GetDevicesByRoomId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="RoomID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="HomeAutomationModelStoreContainer">
     <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="DeviceTopic" EntityType="Self.DeviceTopic" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeviceState" EntityType="Self.DeviceState" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoomDevice" EntityType="Self.RoomDevice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
@@ -194,13 +201,13 @@
       <End Role="Unit" EntitySet="Unit" />
       <End Role="Device" EntitySet="Device" />
     </AssociationSet>
-    <AssociationSet Name="FK_DeviceTopic_Device" Association="Self.FK_DeviceTopic_Device">
+    <AssociationSet Name="FK_DeviceState_Device" Association="Self.FK_DeviceState_Device">
       <End Role="Device" EntitySet="Device" />
-      <End Role="DeviceTopic" EntitySet="DeviceTopic" />
+      <End Role="DeviceState" EntitySet="DeviceState" />
     </AssociationSet>
-    <AssociationSet Name="FK_DeviceTopic_Topic" Association="Self.FK_DeviceTopic_Topic">
-      <End Role="Topic" EntitySet="Topic" />
-      <End Role="DeviceTopic" EntitySet="DeviceTopic" />
+    <AssociationSet Name="FK_DeviceState_State" Association="Self.FK_DeviceState_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="DeviceState" EntitySet="DeviceState" />
     </AssociationSet>
     <AssociationSet Name="FK_RoomDevice_Device" Association="Self.FK_RoomDevice_Device">
       <End Role="Device" EntitySet="Device" />

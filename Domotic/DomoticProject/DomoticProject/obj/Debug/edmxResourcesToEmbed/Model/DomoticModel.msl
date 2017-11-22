@@ -4,74 +4,45 @@
     <EntitySetMapping Name="Device">
       <EntityTypeMapping TypeName="HomeAutomationModel.Device">
         <MappingFragment StoreEntitySet="Device">
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-          <ScalarProperty Name="Device1" ColumnName="Device" />
-          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
           <ScalarProperty Name="TimeOn" ColumnName="TimeOn" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Device1" ColumnName="Device" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DeviceTopic">
-      <EntityTypeMapping TypeName="HomeAutomationModel.DeviceTopic">
-        <MappingFragment StoreEntitySet="DeviceTopic">
-          <ScalarProperty Name="DeviceTopicID" ColumnName="DeviceTopicID" />
-          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-          <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+    <EntitySetMapping Name="DeviceState">
+      <EntityTypeMapping TypeName="HomeAutomationModel.DeviceState">
+        <MappingFragment StoreEntitySet="DeviceState">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+          <ScalarProperty Name="DeviceStateId" ColumnName="DeviceStateId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Role">
       <EntityTypeMapping TypeName="HomeAutomationModel.Role">
         <MappingFragment StoreEntitySet="Role">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="Role1" ColumnName="Role" />
           <ScalarProperty Name="RoleDescription" ColumnName="RoleDescription" />
+          <ScalarProperty Name="Role1" ColumnName="Role" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Room">
       <EntityTypeMapping TypeName="HomeAutomationModel.Room">
         <MappingFragment StoreEntitySet="Room">
-          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-          <ScalarProperty Name="RoomName" ColumnName="RoomName" />
           <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RoomDevice">
-      <EntityTypeMapping TypeName="HomeAutomationModel.RoomDevice">
-        <MappingFragment StoreEntitySet="RoomDevice">
-          <ScalarProperty Name="RoomDeviceID" ColumnName="RoomDeviceID" />
+          <ScalarProperty Name="RoomName" ColumnName="RoomName" />
           <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="HomeAutomationModel.sysdiagrams">
-        <MappingFragment StoreEntitySet="sysdiagrams">
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-          <ScalarProperty Name="version" ColumnName="version" />
-          <ScalarProperty Name="definition" ColumnName="definition" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Topic">
-      <EntityTypeMapping TypeName="HomeAutomationModel.Topic">
-        <MappingFragment StoreEntitySet="Topic">
-          <ScalarProperty Name="TopicID" ColumnName="TopicID" />
-          <ScalarProperty Name="TopicName" ColumnName="TopicName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Unit">
       <EntityTypeMapping TypeName="HomeAutomationModel.Unit">
         <MappingFragment StoreEntitySet="Unit">
-          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
           <ScalarProperty Name="Unit1" ColumnName="Unit" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -86,23 +57,58 @@
           <ScalarProperty Name="PasswordRetries" ColumnName="PasswordRetries" />
           <ScalarProperty Name="Salt" ColumnName="Salt" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRole">
       <EntityTypeMapping TypeName="HomeAutomationModel.UserRole">
         <MappingFragment StoreEntitySet="UserRole">
-          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="State">
+      <EntityTypeMapping TypeName="HomeAutomationModel.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="State1" ColumnName="State" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomDevice">
+      <EntityTypeMapping TypeName="HomeAutomationModel.RoomDevice">
+        <MappingFragment StoreEntitySet="RoomDevice">
+          <ScalarProperty Name="OnTime" ColumnName="OnTime" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="RoomDeviceID" ColumnName="RoomDeviceID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetDeviceByRoomIdAndDeviceID" FunctionName="HomeAutomationModel.Store.GetDeviceByRoomIdAndDeviceID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HomeAutomationModel.GetDeviceByRoomIdAndDeviceID_Result">
+          <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+          <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+          <ScalarProperty Name="Device" ColumnName="Device" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="OnTime" ColumnName="OnTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="GetDevicesByRoomId" FunctionName="HomeAutomationModel.Store.GetDevicesByRoomId">
       <ResultMapping>
         <ComplexTypeMapping TypeName="HomeAutomationModel.GetDevicesByRoomId_Result">
@@ -111,7 +117,9 @@
           <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
           <ScalarProperty Name="Device" ColumnName="Device" />
           <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
           <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="OnTime" ColumnName="OnTime" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

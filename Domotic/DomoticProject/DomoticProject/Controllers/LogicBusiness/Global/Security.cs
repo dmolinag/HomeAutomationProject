@@ -55,7 +55,6 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
                     return new UserResponse { Code = (int)ResponseCode.User_is_deactivated, Message = ResponseCode.User_is_deactivated.ToString() };
                 }
 
-
                 //Validate password
                 UserKeyPair passwordToValidate = new UserKeyPair(user.Salt, user.Password);
 
@@ -136,8 +135,6 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
                 GlobalManager.Instance.Password = updateUserInfoAfterLogin.Password;
                 GlobalManager.Instance.Email = updateUserInfoAfterLogin.Email;
                 GlobalManager.Instance.Culture = updateUserInfoAfterLogin.Culture;
-                //LoadPermissionsList();
-                //btnLogin.Enabled = false;
 
                 return new UserResponse { Code = (int)ResponseCode.Successful, Message = ResponseCode.Successful.ToString() };
             }

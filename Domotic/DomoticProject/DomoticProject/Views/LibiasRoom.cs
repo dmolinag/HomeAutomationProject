@@ -1,4 +1,5 @@
-﻿using DomoticProject.Controllers.Queries;
+﻿using DomoticProject.Controllers.DTO;
+using DomoticProject.Controllers.Queries;
 using DomoticProject.Model;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,8 @@ namespace DomoticProject.Views
             }
             _Request.BringToFront();
 
-
             return _Request;
-
         }
-
 
         public LibiasRoom()
         {
@@ -51,26 +49,93 @@ namespace DomoticProject.Views
             cboDevices.DisplayMember = "Device";
             cboDevices.DataSource = lstDevicesByRoomId;
             cboDevices.SelectedValue = 0;
-            timer1.Start();
         }
 
         private void cboDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //int selectedDeviceID = (int)cboDevices.SelectedValue;
-            //lbl
+            try
+            {
+                int selectedDeviceID = (int)cboDevices.SelectedValue;
+                if(selectedDeviceID == 0)
+                {
+                    btnOff.Enabled = false;
+                    btnOn.Enabled = false;
+                }
+                else
+                {
+                    btnOff.Enabled = true;
+                    btnOn.Enabled = true;
+                }
+                   
+                List<GetDeviceByRoomIdAndDeviceID_Result> lstDeviceByRoomIdAndDeviceId = DeviceController.GetDeviceByRoomIdAndDeviceId(roomId, selectedDeviceID);
+                List<DevicesDTO> retVal = new List<DevicesDTO>();
+                foreach (GetDeviceByRoomIdAndDeviceID_Result reg in lstDeviceByRoomIdAndDeviceId)
+                {
+                    retVal.Add(new DevicesDTO(reg));
+                }
+
+                if (selectedDeviceID == 3)
+                {
+                    btnOff.Enabled = false;
+                    btnOn.Enabled = false;
+                    lblTemp.Text = retVal[0].Value.ToString();
+                    lblUnitTemp.Text = retVal[0].Unit.ToString();
+                }
+                else
+                {
+                    lblTemp.Text = retVal[0].Value.ToString();
+                    lblUnitTemp.Text = retVal[0].Unit.ToString();
+                }
 
 
-            //List<City> lsCities = CityController.GetByCountryID(selectedCountryId);
-            //lsCities.Add(new City() { Name = "Select One", CityID = 0 });
-            //cboCityHeadquarter.DataSource = lsCities;
-            //cboCityHeadquarter.ValueMember = "CityID";
-            //cboCityHeadquarter.DisplayMember = "Name";
-            //cboCityHeadquarter.SelectedValue = 0;
+                pctDeviceStateOff.Visible = true;
+                pctDeviceStateOn.Visible = false;
+                btnOff.Visible = false;
+                btnOn.Visible = true;
+
+                if (retVal[0].State == false)
+                {
+                    pctDeviceStateOff.Visible = true;
+                    pctDeviceStateOn.Visible = false;
+                    btnOff.Visible = false;
+                    btnOn.Visible = true;
+                }
+                else
+                {
+                    pctDeviceStateOff.Visible = false;
+                    pctDeviceStateOn.Visible = true;
+                    btnOff.Visible = true;
+                    btnOn.Visible = false;
+                }
+
+
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void btnOn_Click(object sender, EventArgs e)
         {
-            LibiasRoom.ActiveForm.Refresh();
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void pctDeviceStateOn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOff_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

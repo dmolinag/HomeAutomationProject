@@ -5,24 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5c06102e1acc431aba92a61e7659452a" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="HomeAutomationModel.Device" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.DeviceTopic" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.Role" Width="1.5" PointX="5.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.Room" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.RoomDevice" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.Topic" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.Unit" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.User" Width="1.5" PointX="5.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HomeAutomationModel.UserRole" Width="1.5" PointX="8" PointY="7.25" IsExpanded="true" />
-        <AssociationConnector Association="HomeAutomationModel.FK_Device_Unit" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_DeviceTopic_Device" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_RoomDevice_Device" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_DeviceTopic_Topic" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_UserRole_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_RoomDevice_Room" ManuallyRouted="false" />
-        <AssociationConnector Association="HomeAutomationModel.FK_UserRole_User" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="HomeAutomationModel.Device" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="HomeAutomationModel.DeviceState" Width="1.5" PointX="7.625" PointY="6.625" />
+        <EntityTypeShape EntityType="HomeAutomationModel.Role" Width="1.5" PointX="7.75" PointY="14.875" />
+        <EntityTypeShape EntityType="HomeAutomationModel.Room" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="HomeAutomationModel.Unit" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="HomeAutomationModel.User" Width="1.5" PointX="7.75" PointY="9.875" />
+        <EntityTypeShape EntityType="HomeAutomationModel.UserRole" Width="1.5" PointX="10" PointY="10.75" />
+        <AssociationConnector Association="HomeAutomationModel.FK_Device_Unit" />
+        <AssociationConnector Association="HomeAutomationModel.FK_DeviceState_Device" />
+        <AssociationConnector Association="HomeAutomationModel.FK_UserRole_Role" />
+        <AssociationConnector Association="HomeAutomationModel.FK_UserRole_User" />
+        <EntityTypeShape EntityType="HomeAutomationModel.State" Width="1.5" PointX="0.75" PointY="6.875" />
+        <AssociationConnector Association="HomeAutomationModel.FK_DeviceState_State" />
+        <EntityTypeShape EntityType="HomeAutomationModel.RoomDevice" Width="1.5" PointX="5.25" PointY="1.875" />
+        <AssociationConnector Association="HomeAutomationModel.FK_RoomDevice_Device" />
+        <AssociationConnector Association="HomeAutomationModel.FK_RoomDevice_Room" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

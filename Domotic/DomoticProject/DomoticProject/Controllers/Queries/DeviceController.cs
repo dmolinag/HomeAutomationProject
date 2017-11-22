@@ -19,5 +19,15 @@ namespace DomoticProject.Controllers.Queries
                 return resultList;
             }
         }
+
+        public static List<GetDeviceByRoomIdAndDeviceID_Result> GetDeviceByRoomIdAndDeviceId(int roomId, int deviceId)
+        {
+            using (HomeAutomationEntities context = new HomeAutomationEntities())
+            {
+                List<GetDeviceByRoomIdAndDeviceID_Result> resultList = new List<GetDeviceByRoomIdAndDeviceID_Result>();
+                resultList = context.GetDeviceByRoomIdAndDeviceID(roomId, deviceId).ToList();
+                return resultList;
+            }
+        }
     }
 }

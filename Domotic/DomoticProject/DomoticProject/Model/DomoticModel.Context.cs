@@ -28,15 +28,27 @@ namespace DomoticProject.Model
         }
     
         public virtual DbSet<Device> Device { get; set; }
-        public virtual DbSet<DeviceTopic> DeviceTopic { get; set; }
+        public virtual DbSet<DeviceState> DeviceState { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Room> Room { get; set; }
-        public virtual DbSet<RoomDevice> RoomDevice { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<Topic> Topic { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<State> State { get; set; }
+        public virtual DbSet<RoomDevice> RoomDevice { get; set; }
+    
+        public virtual ObjectResult<GetDeviceByRoomIdAndDeviceID_Result> GetDeviceByRoomIdAndDeviceID(Nullable<int> roomID, Nullable<int> deviceID)
+        {
+            var roomIDParameter = roomID.HasValue ?
+                new ObjectParameter("RoomID", roomID) :
+                new ObjectParameter("RoomID", typeof(int));
+    
+            var deviceIDParameter = deviceID.HasValue ?
+                new ObjectParameter("DeviceID", deviceID) :
+                new ObjectParameter("DeviceID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDeviceByRoomIdAndDeviceID_Result>("GetDeviceByRoomIdAndDeviceID", roomIDParameter, deviceIDParameter);
+        }
     
         public virtual ObjectResult<GetDevicesByRoomId_Result> GetDevicesByRoomId(Nullable<int> roomID)
         {

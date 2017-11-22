@@ -15,7 +15,6 @@ namespace DomoticProject.Views
     {
         public LocalizationManager localizationManager = LocalizationManager.Instance;
 
-
         private static frmMain _Request;
 
         public static frmMain GetRequest()
@@ -65,7 +64,6 @@ namespace DomoticProject.Views
             LibiasRoom frm = LibiasRoom.GetRequest();
             frm.Show();
             this.Visible = false;
-
         }
     }
 }

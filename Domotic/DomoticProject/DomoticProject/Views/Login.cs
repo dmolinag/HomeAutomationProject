@@ -32,8 +32,6 @@ namespace DomoticProject
             }
             _Request.BringToFront();
 
-            string variable;
-
             return _Request;
 
         }
@@ -48,16 +46,9 @@ namespace DomoticProject
 
         private void btnCreateUser_Click(object sender, EventArgs e)
         {
-            try
-            {
-                CreateUser frm = CreateUser.GetRequest();
-                frm.Show();
-                this.Visible = false;
-            }
-            catch
-            {
-
-            }
+            CreateUser frm = CreateUser.GetRequest();
+            frm.Show();
+            this.Visible = false;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -82,7 +73,7 @@ namespace DomoticProject
                     return;
                 }
 
-
+                //User Validation
                 UserResponse passwordValidation = Security.PasswordValidation(username, password);
 
                 if (passwordValidation.Code != 0)
@@ -93,21 +84,16 @@ namespace DomoticProject
                 }
 
 
-
                 frmMain frm = frmMain.GetRequest();
                 frm.Show();
                 this.Visible = false;
-
                 #endregion
-
             }
             catch (Exception ex)
             {
-                Logger.Logger.ErrorL("PasswordRetriesListByUtilityID", "Endpoint not found exception", ex);
+                Logger.Logger.ErrorL(profileName, "Endpoint not found exception", ex);
                 MessageBox.Show("Exception: " + ex);
             }
-
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -128,12 +114,6 @@ namespace DomoticProject
         private void Form1_Load(object sender, EventArgs e)
         {
             this.ActiveControl = btnLogin;
-            timer1.Start();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            this.Refresh();
         }
     }
 }

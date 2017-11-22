@@ -10,15 +10,16 @@
 namespace DomoticProject.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DeviceTopic
+    public partial class GetDeviceByRoomIdAndDeviceID_Result
     {
-        public int DeviceTopicID { get; set; }
-        public int DeviceID { get; set; }
-        public int TopicID { get; set; }
-    
-        public virtual Device Device { get; set; }
-        public virtual Topic Topic { get; set; }
+        public string RoomName { get; set; }
+        public string RoomDescription { get; set; }
+        public Nullable<int> DeviceID { get; set; }
+        public string Device { get; set; }
+        public bool State { get; set; }
+        public Nullable<int> Value { get; set; }
+        public string Unit { get; set; }
+        public Nullable<System.DateTime> OnTime { get; set; }
     }
 }

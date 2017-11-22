@@ -12,12 +12,13 @@ namespace DomoticProject.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class DeviceState
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int DeviceStateId { get; set; }
+        public int DeviceId { get; set; }
+        public int StateId { get; set; }
+    
+        public virtual Device Device { get; set; }
+        public virtual State State { get; set; }
     }
 }

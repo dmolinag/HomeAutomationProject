@@ -17,6 +17,10 @@ namespace DomoticProject.Model
         public int RoomDeviceID { get; set; }
         public int RoomID { get; set; }
         public int DeviceID { get; set; }
+        public int StateID { get; set; }
+        public Nullable<int> Value { get; set; }
+        public Nullable<int> UnitID { get; set; }
+        public Nullable<System.DateTime> OnTime { get; set; }
     
         public virtual Device Device { get; set; }
         public virtual Room Room { get; set; }

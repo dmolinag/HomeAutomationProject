@@ -13,7 +13,6 @@ namespace DomoticProject.Views
 {
     public partial class frmSplash : Form
     {
-
         private static frmSplash _Request;
 
         public static frmSplash GetRequest()
