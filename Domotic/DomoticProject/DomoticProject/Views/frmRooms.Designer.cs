@@ -1,6 +1,6 @@
 ﻿namespace DomoticProject.Views
 {
-    partial class frmMain
+    partial class frmRooms
     {
         /// <summary>
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnBack = new System.Windows.Forms.Button();
             this.btnDinningRoom = new System.Windows.Forms.Button();
             this.btnGarage = new System.Windows.Forms.Button();
             this.btnSantiagosRoom = new System.Windows.Forms.Button();
@@ -49,6 +50,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.btnDinningRoom);
             this.panel1.Controls.Add(this.btnGarage);
             this.panel1.Controls.Add(this.btnSantiagosRoom);
@@ -64,11 +66,24 @@
             this.panel1.Size = new System.Drawing.Size(404, 312);
             this.panel1.TabIndex = 0;
             // 
+            // btnBack
+            // 
+            this.btnBack.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnBack.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.btnBack.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnBack.Location = new System.Drawing.Point(294, 273);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(75, 30);
+            this.btnBack.TabIndex = 10;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // btnDinningRoom
             // 
             this.btnDinningRoom.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnDinningRoom.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDinningRoom.Location = new System.Drawing.Point(274, 242);
+            this.btnDinningRoom.Location = new System.Drawing.Point(274, 204);
             this.btnDinningRoom.Name = "btnDinningRoom";
             this.btnDinningRoom.Size = new System.Drawing.Size(115, 61);
             this.btnDinningRoom.TabIndex = 9;
@@ -79,7 +94,7 @@
             // 
             this.btnGarage.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnGarage.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGarage.Location = new System.Drawing.Point(147, 242);
+            this.btnGarage.Location = new System.Drawing.Point(147, 204);
             this.btnGarage.Name = "btnGarage";
             this.btnGarage.Size = new System.Drawing.Size(115, 61);
             this.btnGarage.TabIndex = 8;
@@ -90,18 +105,18 @@
             // 
             this.btnSantiagosRoom.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnSantiagosRoom.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSantiagosRoom.Location = new System.Drawing.Point(147, 143);
+            this.btnSantiagosRoom.Location = new System.Drawing.Point(147, 126);
             this.btnSantiagosRoom.Name = "btnSantiagosRoom";
             this.btnSantiagosRoom.Size = new System.Drawing.Size(115, 61);
             this.btnSantiagosRoom.TabIndex = 7;
-            this.btnSantiagosRoom.Text = "Santiago\'s Room";
+            this.btnSantiagosRoom.Text = "Santiagos Room";
             this.btnSantiagosRoom.UseVisualStyleBackColor = true;
             // 
             // btnLivingRoom
             // 
             this.btnLivingRoom.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnLivingRoom.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLivingRoom.Location = new System.Drawing.Point(20, 242);
+            this.btnLivingRoom.Location = new System.Drawing.Point(20, 204);
             this.btnLivingRoom.Name = "btnLivingRoom";
             this.btnLivingRoom.Size = new System.Drawing.Size(115, 61);
             this.btnLivingRoom.TabIndex = 6;
@@ -112,7 +127,7 @@
             // 
             this.btnToillet.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnToillet.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnToillet.Location = new System.Drawing.Point(274, 143);
+            this.btnToillet.Location = new System.Drawing.Point(274, 126);
             this.btnToillet.Name = "btnToillet";
             this.btnToillet.Size = new System.Drawing.Size(115, 61);
             this.btnToillet.TabIndex = 5;
@@ -123,11 +138,11 @@
             // 
             this.btnDanielsRoom.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnDanielsRoom.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDanielsRoom.Location = new System.Drawing.Point(20, 143);
+            this.btnDanielsRoom.Location = new System.Drawing.Point(20, 126);
             this.btnDanielsRoom.Name = "btnDanielsRoom";
             this.btnDanielsRoom.Size = new System.Drawing.Size(115, 61);
             this.btnDanielsRoom.TabIndex = 4;
-            this.btnDanielsRoom.Text = "Daniel\'s Room";
+            this.btnDanielsRoom.Text = "Daniels Room";
             this.btnDanielsRoom.UseVisualStyleBackColor = true;
             // 
             // btnSittingRoom
@@ -149,8 +164,9 @@
             this.btnMHsRoom.Name = "btnMHsRoom";
             this.btnMHsRoom.Size = new System.Drawing.Size(115, 61);
             this.btnMHsRoom.TabIndex = 2;
-            this.btnMHsRoom.Text = "Hector and Maria\'s Room";
+            this.btnMHsRoom.Text = "Hector and Marias Room";
             this.btnMHsRoom.UseVisualStyleBackColor = true;
+            this.btnMHsRoom.Click += new System.EventHandler(this.btnMHsRoom_Click);
             // 
             // btnLibiasRoom
             // 
@@ -160,7 +176,7 @@
             this.btnLibiasRoom.Name = "btnLibiasRoom";
             this.btnLibiasRoom.Size = new System.Drawing.Size(115, 61);
             this.btnLibiasRoom.TabIndex = 1;
-            this.btnLibiasRoom.Text = "Libia\'s Room";
+            this.btnLibiasRoom.Text = "Libias Room";
             this.btnLibiasRoom.UseVisualStyleBackColor = true;
             this.btnLibiasRoom.Click += new System.EventHandler(this.btnLibiasRoom_Click);
             // 
@@ -206,7 +222,7 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
             // 
-            // frmMain
+            // frmRooms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -215,7 +231,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.Name = "frmMain";
+            this.Name = "frmRooms";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Domotic Automation ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
@@ -246,5 +262,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Button btnBack;
     }
 }

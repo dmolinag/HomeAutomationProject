@@ -17,9 +17,9 @@ namespace DomoticProject.Model
         public string RoomDescription { get; set; }
         public Nullable<int> DeviceID { get; set; }
         public string Device { get; set; }
+        public int StateId { get; set; }
         public bool State { get; set; }
         public Nullable<int> Value { get; set; }
         public string Unit { get; set; }
-        public Nullable<System.DateTime> OnTime { get; set; }
     }
 }

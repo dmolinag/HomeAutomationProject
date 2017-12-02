@@ -14,6 +14,19 @@
           <Property Name="UnitID" Type="int" />
           <Property Name="TimeOn" Type="int" />
         </EntityType>
+        <EntityType Name="DeviceOnTime">
+          <Key>
+            <PropertyRef Name="DeviceOnTimeID" />
+          </Key>
+          <Property Name="DeviceOnTimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomID" Type="int" Nullable="false" />
+          <Property Name="DeviceID" Type="int" Nullable="false" />
+          <Property Name="OnTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="OffTime" Type="datetime2" Precision="0" />
+          <Property Name="OnTimeDuration" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="OnUserID" Type="int" />
+          <Property Name="OffUserID" Type="int" />
+        </EntityType>
         <EntityType Name="DeviceState">
           <Key>
             <PropertyRef Name="DeviceStateId" />
@@ -48,7 +61,6 @@
           <Property Name="StateID" Type="int" Nullable="false" />
           <Property Name="Value" Type="int" />
           <Property Name="UnitID" Type="int" />
-          <Property Name="OnTime" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -112,6 +124,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeviceOnTime_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="OnUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceOnTime_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="OffUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DeviceState_Device">
           <End Role="Device" Type="Self.Device" Multiplicity="1" />
           <End Role="DeviceState" Type="Self.DeviceState" Multiplicity="*" />
@@ -133,6 +169,30 @@
             </Principal>
             <Dependent Role="DeviceState">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceTimeOn_Device">
+          <End Role="Device" Type="Self.Device" Multiplicity="1" />
+          <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceTimeOn_Room">
+          <End Role="Room" Type="Self.Room" Multiplicity="1" />
+          <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="RoomID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -188,11 +248,16 @@
           <Parameter Name="RoomID" Type="int" Mode="In" />
           <Parameter Name="DeviceID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetDeviceOnTimeByRoomIdAndDeviceID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoomID" Type="int" Mode="In" />
+          <Parameter Name="DeviceID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetDevicesByRoomId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RoomID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="HomeAutomationModelStoreContainer">
           <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeviceOnTime" EntityType="Self.DeviceOnTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeviceState" EntityType="Self.DeviceState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
@@ -206,6 +271,14 @@
             <End Role="Unit" EntitySet="Unit" />
             <End Role="Device" EntitySet="Device" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeviceOnTime_User" Association="Self.FK_DeviceOnTime_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceOnTime_User1" Association="Self.FK_DeviceOnTime_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
           <AssociationSet Name="FK_DeviceState_Device" Association="Self.FK_DeviceState_Device">
             <End Role="Device" EntitySet="Device" />
             <End Role="DeviceState" EntitySet="DeviceState" />
@@ -213,6 +286,14 @@
           <AssociationSet Name="FK_DeviceState_State" Association="Self.FK_DeviceState_State">
             <End Role="State" EntitySet="State" />
             <End Role="DeviceState" EntitySet="DeviceState" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceTimeOn_Device" Association="Self.FK_DeviceTimeOn_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceTimeOn_Room" Association="Self.FK_DeviceTimeOn_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomDevice_Device" Association="Self.FK_RoomDevice_Device">
             <End Role="Device" EntitySet="Device" />
@@ -236,12 +317,15 @@
     <edmx:ConceptualModels>
       <Schema Namespace="HomeAutomationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HomeAutomationEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetDevicesByRoomId" ReturnType="Collection(HomeAutomationModel.GetDevicesByRoomId_Result)">
+          <Parameter Name="RoomID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Device" EntityType="HomeAutomationModel.Device" />
           <EntitySet Name="DeviceState" EntityType="HomeAutomationModel.DeviceState" />
           <EntitySet Name="Role" EntityType="HomeAutomationModel.Role" />
           <EntitySet Name="Room" EntityType="HomeAutomationModel.Room" />
+          <EntitySet Name="State" EntityType="HomeAutomationModel.State" />
           <EntitySet Name="Unit" EntityType="HomeAutomationModel.Unit" />
-          <EntitySet Name="User" EntityType="HomeAutomationModel.User" />
           <EntitySet Name="UserRole" EntityType="HomeAutomationModel.UserRole" />
           <AssociationSet Name="FK_Device_Unit" Association="HomeAutomationModel.FK_Device_Unit">
             <End Role="Unit" EntitySet="Unit" />
@@ -251,20 +335,20 @@
             <End Role="Device" EntitySet="Device" />
             <End Role="DeviceState" EntitySet="DeviceState" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserRole_Role" Association="HomeAutomationModel.FK_UserRole_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRole_User" Association="HomeAutomationModel.FK_UserRole_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserRole" EntitySet="UserRole" />
-          </AssociationSet>
-          <EntitySet Name="State" EntityType="HomeAutomationModel.State" />
           <AssociationSet Name="FK_DeviceState_State" Association="HomeAutomationModel.FK_DeviceState_State">
             <End Role="State" EntitySet="State" />
             <End Role="DeviceState" EntitySet="DeviceState" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="HomeAutomationModel.FK_UserRole_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <FunctionImport Name="GetDeviceByRoomIdAndDeviceID" ReturnType="Collection(HomeAutomationModel.GetDeviceByRoomIdAndDeviceID_Result)">
+            <Parameter Name="RoomID" Mode="In" Type="Int32" />
+            <Parameter Name="DeviceID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="RoomDevice" EntityType="HomeAutomationModel.RoomDevice" />
+          <EntitySet Name="User" EntityType="HomeAutomationModel.User" />
           <AssociationSet Name="FK_RoomDevice_Device" Association="HomeAutomationModel.FK_RoomDevice_Device">
             <End Role="Device" EntitySet="Device" />
             <End Role="RoomDevice" EntitySet="RoomDevice" />
@@ -273,14 +357,41 @@
             <End Role="Room" EntitySet="Room" />
             <End Role="RoomDevice" EntitySet="RoomDevice" />
           </AssociationSet>
-          <FunctionImport Name="GetDeviceByRoomIdAndDeviceID" ReturnType="Collection(HomeAutomationModel.GetDeviceByRoomIdAndDeviceID_Result)">
+          <AssociationSet Name="FK_UserRole_User" Association="HomeAutomationModel.FK_UserRole_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <FunctionImport Name="GetDeviceOnTimeByRoomIdAndDeviceID" ReturnType="Collection(HomeAutomationModel.GetDeviceOnTimeByRoomIdAndDeviceID_Result)">
             <Parameter Name="RoomID" Mode="In" Type="Int32" />
             <Parameter Name="DeviceID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetDevicesByRoomId" ReturnType="Collection(HomeAutomationModel.GetDevicesByRoomId_Result)">
-            <Parameter Name="RoomID" Mode="In" Type="Int32" />
-          </FunctionImport>
+          <EntitySet Name="DeviceOnTime" EntityType="HomeAutomationModel.DeviceOnTime" />
+          <AssociationSet Name="FK_DeviceTimeOn_Device" Association="HomeAutomationModel.FK_DeviceTimeOn_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceOnTime_User" Association="HomeAutomationModel.FK_DeviceOnTime_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceOnTime_User1" Association="HomeAutomationModel.FK_DeviceOnTime_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeviceTimeOn_Room" Association="HomeAutomationModel.FK_DeviceTimeOn_Room">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+          </AssociationSet>
           </EntityContainer>
+        <ComplexType Name="GetDevicesByRoomId_Result">
+          <Property Type="String" Name="RoomName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="RoomDescription" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="DeviceID" Nullable="true" />
+          <Property Type="String" Name="Device" Nullable="true" MaxLength="30" />
+          <Property Type="Boolean" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Value" Nullable="true" />
+          <Property Type="String" Name="Unit" Nullable="true" MaxLength="5" />
+        </ComplexType>
         <EntityType Name="Device">
           <Key>
             <PropertyRef Name="DeviceID" />
@@ -292,6 +403,7 @@
           <NavigationProperty Name="Unit" Relationship="HomeAutomationModel.FK_Device_Unit" FromRole="Device" ToRole="Unit" />
           <NavigationProperty Name="DeviceState" Relationship="HomeAutomationModel.FK_DeviceState_Device" FromRole="Device" ToRole="DeviceState" />
           <NavigationProperty Name="RoomDevice" Relationship="HomeAutomationModel.FK_RoomDevice_Device" FromRole="Device" ToRole="RoomDevice" />
+          <NavigationProperty Name="DeviceOnTime" Relationship="HomeAutomationModel.FK_DeviceTimeOn_Device" FromRole="Device" ToRole="DeviceOnTime" />
         </EntityType>
         <EntityType Name="DeviceState">
           <Key>
@@ -320,6 +432,15 @@
           <Property Name="RoomName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="RoomDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RoomDevice" Relationship="HomeAutomationModel.FK_RoomDevice_Room" FromRole="Room" ToRole="RoomDevice" />
+          <NavigationProperty Name="DeviceOnTime" Relationship="HomeAutomationModel.FK_DeviceTimeOn_Room" FromRole="Room" ToRole="DeviceOnTime" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State1" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DeviceState" Relationship="HomeAutomationModel.FK_DeviceState_State" FromRole="State" ToRole="DeviceState" />
         </EntityType>
         <EntityType Name="Unit">
           <Key>
@@ -328,25 +449,6 @@
           <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Unit1" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Device" Relationship="HomeAutomationModel.FK_Device_Unit" FromRole="Unit" ToRole="Device" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Lastname" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Salt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PasswordRetries" Type="Int32" Nullable="false" />
-          <Property Name="MaxRetries" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="LastLoginDate" Type="DateTime" Precision="7" />
-          <Property Name="Culture" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="UserRole" Relationship="HomeAutomationModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -382,38 +484,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserRole_Role">
-          <End Type="HomeAutomationModel.Role" Role="Role" Multiplicity="1" />
-          <End Type="HomeAutomationModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserRole_User">
-          <End Type="HomeAutomationModel.User" Role="User" Multiplicity="1" />
-          <End Type="HomeAutomationModel.UserRole" Role="UserRole" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="UserRole">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="State">
-          <Key>
-            <PropertyRef Name="StateId" />
-          </Key>
-          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="State1" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="DeviceState" Relationship="HomeAutomationModel.FK_DeviceState_State" FromRole="State" ToRole="DeviceState" />
-        </EntityType>
         <Association Name="FK_DeviceState_State">
           <End Type="HomeAutomationModel.State" Role="State" Multiplicity="1" />
           <End Type="HomeAutomationModel.DeviceState" Role="DeviceState" Multiplicity="*" />
@@ -426,6 +496,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Type="HomeAutomationModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="HomeAutomationModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetDeviceByRoomIdAndDeviceID_Result">
+          <Property Type="String" Name="RoomName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="RoomDescription" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="DeviceID" Nullable="true" />
+          <Property Type="String" Name="Device" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="StateId" Nullable="false" />
+          <Property Type="Boolean" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Value" Nullable="true" />
+          <Property Type="String" Name="Unit" Nullable="true" MaxLength="5" />
+        </ComplexType>
         <EntityType Name="RoomDevice">
           <Key>
             <PropertyRef Name="RoomDeviceID" />
@@ -436,9 +528,29 @@
           <Property Name="StateID" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Int32" />
           <Property Name="UnitID" Type="Int32" />
-          <Property Name="OnTime" Type="DateTime" Precision="7" />
           <NavigationProperty Name="Device" Relationship="HomeAutomationModel.FK_RoomDevice_Device" FromRole="RoomDevice" ToRole="Device" />
           <NavigationProperty Name="Room" Relationship="HomeAutomationModel.FK_RoomDevice_Room" FromRole="RoomDevice" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordRetries" Type="Int32" Nullable="false" />
+          <Property Name="MaxRetries" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="7" />
+          <Property Name="Culture" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserRole" Relationship="HomeAutomationModel.FK_UserRole_User" FromRole="User" ToRole="UserRole" />
+          <NavigationProperty Name="DeviceOnTime" Relationship="HomeAutomationModel.FK_DeviceOnTime_User" FromRole="User" ToRole="DeviceOnTime" />
+          <NavigationProperty Name="DeviceOnTime1" Relationship="HomeAutomationModel.FK_DeviceOnTime_User1" FromRole="User" ToRole="DeviceOnTime" />
         </EntityType>
         <Association Name="FK_RoomDevice_Device">
           <End Type="HomeAutomationModel.Device" Role="Device" Multiplicity="1" />
@@ -464,32 +576,112 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetDeviceByRoomIdAndDeviceID_Result">
-          <Property Type="String" Name="RoomName" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="RoomDescription" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="DeviceID" Nullable="true" />
-          <Property Type="String" Name="Device" Nullable="true" MaxLength="30" />
-          <Property Type="Boolean" Name="State" Nullable="false" />
-          <Property Type="Int32" Name="Value" Nullable="true" />
-          <Property Type="String" Name="Unit" Nullable="true" MaxLength="5" />
-          <Property Type="DateTime" Name="OnTime" Nullable="true" />
+        <Association Name="FK_UserRole_User">
+          <End Type="HomeAutomationModel.User" Role="User" Multiplicity="1" />
+          <End Type="HomeAutomationModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetDeviceOnTimeByRoomIdAndDeviceID_Result">
+          <Property Type="Int32" Name="DeviceOnTimeID" Nullable="false" />
+          <Property Type="Int32" Name="RoomID" Nullable="false" />
+          <Property Type="Int32" Name="DeviceID" Nullable="false" />
+          <Property Type="DateTime" Name="OnTime" Nullable="false" />
+          <Property Type="DateTime" Name="OffTime" Nullable="true" />
+          <Property Type="Decimal" Name="OnTimeDuration" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="OnUserID" Nullable="false" />
+          <Property Type="Int32" Name="OffUserID" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetDevicesByRoomId_Result">
-          <Property Type="String" Name="RoomName" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="RoomDescription" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="DeviceID" Nullable="true" />
-          <Property Type="String" Name="Device" Nullable="true" MaxLength="30" />
-          <Property Type="Boolean" Name="State" Nullable="false" />
-          <Property Type="Int32" Name="Value" Nullable="true" />
-          <Property Type="String" Name="Unit" Nullable="true" MaxLength="5" />
-          <Property Type="DateTime" Name="OnTime" Nullable="true" />
-        </ComplexType>
+        <EntityType Name="DeviceOnTime">
+          <Key>
+            <PropertyRef Name="DeviceOnTimeID" />
+          </Key>
+          <Property Name="DeviceOnTimeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="DeviceID" Type="Int32" Nullable="false" />
+          <Property Name="OnTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OffTime" Type="DateTime" Precision="0" />
+          <Property Name="OnTimeDuration" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OnUserID" Type="Int32" />
+          <Property Name="OffUserID" Type="Int32" />
+          <NavigationProperty Name="Device" Relationship="HomeAutomationModel.FK_DeviceTimeOn_Device" FromRole="DeviceOnTime" ToRole="Device" />
+          <NavigationProperty Name="User" Relationship="HomeAutomationModel.FK_DeviceOnTime_User" FromRole="DeviceOnTime" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HomeAutomationModel.FK_DeviceOnTime_User1" FromRole="DeviceOnTime" ToRole="User" />
+          <NavigationProperty Name="Room" Relationship="HomeAutomationModel.FK_DeviceTimeOn_Room" FromRole="DeviceOnTime" ToRole="Room" />
+        </EntityType>
+        <Association Name="FK_DeviceTimeOn_Device">
+          <End Type="HomeAutomationModel.Device" Role="Device" Multiplicity="1" />
+          <End Type="HomeAutomationModel.DeviceOnTime" Role="DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="DeviceID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="DeviceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceOnTime_User">
+          <End Type="HomeAutomationModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeAutomationModel.DeviceOnTime" Role="DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="OnUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceOnTime_User1">
+          <End Type="HomeAutomationModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HomeAutomationModel.DeviceOnTime" Role="DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="OffUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeviceTimeOn_Room">
+          <End Type="HomeAutomationModel.Room" Role="Room" Multiplicity="1" />
+          <End Type="HomeAutomationModel.DeviceOnTime" Role="DeviceOnTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="DeviceOnTime">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HomeAutomationModelStoreContainer" CdmEntityContainer="HomeAutomationEntities">
+          <FunctionImportMapping FunctionImportName="GetDevicesByRoomId" FunctionName="HomeAutomationModel.Store.GetDevicesByRoomId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HomeAutomationModel.GetDevicesByRoomId_Result">
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="Device" ColumnName="Device" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Device">
             <EntityTypeMapping TypeName="HomeAutomationModel.Device">
               <MappingFragment StoreEntitySet="Device">
@@ -527,11 +719,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="State">
+            <EntityTypeMapping TypeName="HomeAutomationModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="State1" ColumnName="State" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Unit">
             <EntityTypeMapping TypeName="HomeAutomationModel.Unit">
               <MappingFragment StoreEntitySet="Unit">
                 <ScalarProperty Name="Unit1" ColumnName="Unit" />
                 <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRole">
+            <EntityTypeMapping TypeName="HomeAutomationModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDeviceByRoomIdAndDeviceID" FunctionName="HomeAutomationModel.Store.GetDeviceByRoomIdAndDeviceID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HomeAutomationModel.GetDeviceByRoomIdAndDeviceID_Result">
+                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
+                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="Device" ColumnName="Device" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="RoomDevice">
+            <EntityTypeMapping TypeName="HomeAutomationModel.RoomDevice">
+              <MappingFragment StoreEntitySet="RoomDevice">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="RoomDeviceID" ColumnName="RoomDeviceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -554,64 +789,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserRole">
-            <EntityTypeMapping TypeName="HomeAutomationModel.UserRole">
-              <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="State">
-            <EntityTypeMapping TypeName="HomeAutomationModel.State">
-              <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="State1" ColumnName="State" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RoomDevice">
-            <EntityTypeMapping TypeName="HomeAutomationModel.RoomDevice">
-              <MappingFragment StoreEntitySet="RoomDevice">
+          <FunctionImportMapping FunctionImportName="GetDeviceOnTimeByRoomIdAndDeviceID" FunctionName="HomeAutomationModel.Store.GetDeviceOnTimeByRoomIdAndDeviceID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HomeAutomationModel.GetDeviceOnTimeByRoomIdAndDeviceID_Result">
+                <ScalarProperty Name="DeviceOnTimeID" ColumnName="DeviceOnTimeID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
                 <ScalarProperty Name="OnTime" ColumnName="OnTime" />
-                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="OffTime" ColumnName="OffTime" />
+                <ScalarProperty Name="OnTimeDuration" ColumnName="OnTimeDuration" />
+                <ScalarProperty Name="OnUserID" ColumnName="OnUserID" />
+                <ScalarProperty Name="OffUserID" ColumnName="OffUserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="DeviceOnTime">
+            <EntityTypeMapping TypeName="HomeAutomationModel.DeviceOnTime">
+              <MappingFragment StoreEntitySet="DeviceOnTime">
+                <ScalarProperty Name="OffUserID" ColumnName="OffUserID" />
+                <ScalarProperty Name="OnUserID" ColumnName="OnUserID" />
+                <ScalarProperty Name="OnTimeDuration" ColumnName="OnTimeDuration" />
+                <ScalarProperty Name="OffTime" ColumnName="OffTime" />
+                <ScalarProperty Name="OnTime" ColumnName="OnTime" />
                 <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
                 <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="RoomDeviceID" ColumnName="RoomDeviceID" />
+                <ScalarProperty Name="DeviceOnTimeID" ColumnName="DeviceOnTimeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDeviceByRoomIdAndDeviceID" FunctionName="HomeAutomationModel.Store.GetDeviceByRoomIdAndDeviceID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HomeAutomationModel.GetDeviceByRoomIdAndDeviceID_Result">
-                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
-                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
-                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-                <ScalarProperty Name="Device" ColumnName="Device" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="OnTime" ColumnName="OnTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDevicesByRoomId" FunctionName="HomeAutomationModel.Store.GetDevicesByRoomId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HomeAutomationModel.GetDevicesByRoomId_Result">
-                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
-                <ScalarProperty Name="RoomDescription" ColumnName="RoomDescription" />
-                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-                <ScalarProperty Name="Device" ColumnName="Device" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="OnTime" ColumnName="OnTime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

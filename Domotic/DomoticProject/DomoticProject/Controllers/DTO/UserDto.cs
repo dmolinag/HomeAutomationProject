@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DomoticProject.Model;
 
-namespace DomoticProject.DTO
+namespace DomoticProject.Controllers.DTO
 {
     public class UserDto
     {

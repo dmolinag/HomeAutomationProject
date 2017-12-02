@@ -12,16 +12,20 @@ namespace DomoticProject.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class RoomDevice
+    public partial class DeviceOnTime
     {
-        public int RoomDeviceID { get; set; }
+        public int DeviceOnTimeID { get; set; }
         public int RoomID { get; set; }
         public int DeviceID { get; set; }
-        public int StateID { get; set; }
-        public Nullable<int> Value { get; set; }
-        public Nullable<int> UnitID { get; set; }
+        public System.DateTime OnTime { get; set; }
+        public Nullable<System.DateTime> OffTime { get; set; }
+        public Nullable<decimal> OnTimeDuration { get; set; }
+        public Nullable<int> OnUserID { get; set; }
+        public Nullable<int> OffUserID { get; set; }
     
         public virtual Device Device { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         public virtual Room Room { get; set; }
     }
 }

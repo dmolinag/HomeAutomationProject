@@ -11,14 +11,15 @@ namespace DomoticProject.Model
 {
     using System;
     
-    public partial class GetDevicesByRoomId_Result
+    public partial class GetDeviceOnTimeByRoomIdAndDeviceID_Result
     {
-        public string RoomName { get; set; }
-        public string RoomDescription { get; set; }
-        public Nullable<int> DeviceID { get; set; }
-        public string Device { get; set; }
-        public bool State { get; set; }
-        public Nullable<int> Value { get; set; }
-        public string Unit { get; set; }
+        public int DeviceOnTimeID { get; set; }
+        public int RoomID { get; set; }
+        public int DeviceID { get; set; }
+        public System.DateTime OnTime { get; set; }
+        public Nullable<System.DateTime> OffTime { get; set; }
+        public Nullable<decimal> OnTimeDuration { get; set; }
+        public int OnUserID { get; set; }
+        public Nullable<int> OffUserID { get; set; }
     }
 }

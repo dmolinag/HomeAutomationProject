@@ -18,6 +18,8 @@ namespace DomoticProject.Model
         public User()
         {
             this.UserRole = new HashSet<UserRole>();
+            this.DeviceOnTime = new HashSet<DeviceOnTime>();
+            this.DeviceOnTime1 = new HashSet<DeviceOnTime>();
         }
     
         public int UserID { get; set; }
@@ -36,5 +38,9 @@ namespace DomoticProject.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceOnTime> DeviceOnTime { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceOnTime> DeviceOnTime1 { get; set; }
     }
 }

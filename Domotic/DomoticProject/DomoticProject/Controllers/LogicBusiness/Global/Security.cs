@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using DomoticProject.Controllers;
 using DomoticProject.Model;
-using DomoticProject.DTO;
-using System.Runtime.Serialization;
-using HomeAutomation.Response;
-using DomoticProject.Logger;
+ using HomeAutomation.Response;
+using DomoticProject.Controllers.DTO;
 
 namespace DomoticProject.Controllers.LogicBusiness.Global
 {
@@ -17,17 +10,22 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
     {
         static String profileName = "(Security)";
 
+
         /// <summary>
-        /// Get password retries from the System Variables table by the utilityID, if the utilityID does not exist in the System Variables table, it will take the UtilityID = null.
+        /// Password validation.
         /// </summary>
-        /// Version: SPI V5G
-        /// Author: Daniel Molina
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
+        /// <Author> Daniel Molina </Author>
+        /// <LastModification>  25/11/2017 - 15:41 </LastModification>
+        /// <LastModificationBy> Daniel Molina </LastModificationBy>
         public static UserResponse PasswordValidation(string username, string password)
         {
             try
             {
                 //Verify the password
-                //Get user password data base by the username
+                //Get user data by the username
                 User user = UserController.GetByUsername(username);
 
                 //Get user by username or email
@@ -48,7 +46,7 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
                     return new UserResponse { Code = (int)ResponseCode.User_is_deleted, Message = ResponseCode.User_is_deleted.ToString() };
                 }
 
-                //Verify if the user is Active
+                //Verify if the user is Desactivated
                 if (user.IsActive == false)
                 {
                     Logger.Logger.Info(profileName, "Method Response: User is not Active. Username:" + username);
@@ -121,6 +119,7 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
                 updateUserInfoAfterLogin.IsActive = user.IsActive;
                 updateUserInfoAfterLogin.IsDeleted = user.IsDeleted;
                 updateUserInfoAfterLogin.LastLoginDate = DateTime.Now;
+                updateUserInfoAfterLogin.Culture = GlobalManager.Instance.Culture;
 
                 UserController.Update(updateUserInfoAfterLogin);
 
@@ -131,6 +130,7 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
                 GlobalManager.Instance.Name = updateUserInfoAfterLogin.Name;
                 GlobalManager.Instance.Lastname = updateUserInfoAfterLogin.Lastname;
                 GlobalManager.Instance.LoginDate = DateTime.Now;
+                GlobalManager.Instance.UserId = updateUserInfoAfterLogin.UserID;
                 GlobalManager.Instance.Username = updateUserInfoAfterLogin.Username;
                 GlobalManager.Instance.Password = updateUserInfoAfterLogin.Password;
                 GlobalManager.Instance.Email = updateUserInfoAfterLogin.Email;

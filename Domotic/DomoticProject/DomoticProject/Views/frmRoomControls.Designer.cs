@@ -1,6 +1,6 @@
 ﻿namespace DomoticProject.Views
 {
-    partial class LibiasRoom
+    partial class frmRoomControls
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LibiasRoom));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoomControls));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnOff = new System.Windows.Forms.Button();
             this.btnOn = new System.Windows.Forms.Button();
             this.pctDeviceStateOn = new System.Windows.Forms.PictureBox();
             this.btnBack = new System.Windows.Forms.Button();
@@ -45,7 +46,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboDevices = new System.Windows.Forms.ComboBox();
-            this.btnOff = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctDeviceStateOn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctDeviceStateOff)).BeginInit();
@@ -73,6 +73,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(318, 237);
             this.panel1.TabIndex = 0;
+            // 
+            // btnOff
+            // 
+            this.btnOff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.btnOff.Location = new System.Drawing.Point(243, 52);
+            this.btnOff.Name = "btnOff";
+            this.btnOff.Size = new System.Drawing.Size(35, 31);
+            this.btnOff.TabIndex = 16;
+            this.btnOff.Text = "Off";
+            this.btnOff.UseVisualStyleBackColor = false;
+            this.btnOff.Click += new System.EventHandler(this.btnOff_Click);
             // 
             // btnOn
             // 
@@ -107,6 +118,7 @@
             this.btnBack.TabIndex = 13;
             this.btnBack.Text = "Back";
             this.btnBack.UseVisualStyleBackColor = false;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnAddDevice
             // 
@@ -220,27 +232,17 @@
             this.cboDevices.TabIndex = 0;
             this.cboDevices.SelectedIndexChanged += new System.EventHandler(this.cboDevices_SelectedIndexChanged);
             // 
-            // btnOff
-            // 
-            this.btnOff.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnOff.Location = new System.Drawing.Point(243, 52);
-            this.btnOff.Name = "btnOff";
-            this.btnOff.Size = new System.Drawing.Size(35, 31);
-            this.btnOff.TabIndex = 16;
-            this.btnOff.Text = "Off";
-            this.btnOff.UseVisualStyleBackColor = false;
-            this.btnOff.Click += new System.EventHandler(this.btnOff_Click);
-            // 
-            // LibiasRoom
+            // frmRoomControls
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(342, 261);
             this.Controls.Add(this.panel1);
-            this.Name = "LibiasRoom";
+            this.Name = "frmRoomControls";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LibiasRoom";
+            this.Text = "Room Controls";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLibiasRoom_FormClosing);
             this.Load += new System.EventHandler(this.LibiasRoom_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

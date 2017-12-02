@@ -7,9 +7,9 @@ using DomoticProject.Model;
 
 namespace DomoticProject.Controllers.DTO
 {
-    public class DevicesDTO
+    public class DevicesDTOPartial
     {
-        public DevicesDTO(GetDevicesByRoomId_Result register)
+        public DevicesDTOPartial(GetDevicesByRoomId_Result register)
         {
             this.RoomName = register.RoomName;
             this.RoomDescription = register.RoomDescription;
@@ -18,29 +18,28 @@ namespace DomoticProject.Controllers.DTO
             this.State = register.State;
             this.Value = register.Value;
             this.Unit = register.Unit;
-            this.OnTime = register.OnTime;
         }
 
-        public DevicesDTO(GetDeviceByRoomIdAndDeviceID_Result register)
+        public DevicesDTOPartial(GetDeviceByRoomIdAndDeviceID_Result register)
         {
             this.RoomName = register.RoomName;
             this.RoomDescription = register.RoomDescription;
             this.DeviceId = register.DeviceID;
             this.Device = register.Device;
+            this.StateId = register.StateId;
             this.State = register.State;
             this.Value = register.Value;
             this.Unit = register.Unit;
-            this.OnTime = register.OnTime;
         }
 
         public String RoomName { get; set; }
         public String RoomDescription { get; set; }
         public String Device { get; set; }
         public int? DeviceId { get; set; }
+        public int? StateId { get; set; }
         public Boolean State { get; set; }
         public int? Value { get; set; }
         public String Unit { get; set; }
-        public DateTime? OnTime { get; set; }
 
 
         ///// <summary>

@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DomoticProject.DTO;
 
 namespace DomoticProject.Views
 {
@@ -25,7 +17,6 @@ namespace DomoticProject.Views
             return _Request;
         }
 
-
         public frmSplash()
         {
             InitializeComponent();
@@ -34,11 +25,11 @@ namespace DomoticProject.Views
         private void frmSplash_Load(object sender, EventArgs e)
         {
             progressBar.Minimum = 0;
-            progressBar.Maximum = 40;
+            progressBar.Maximum = 1400;
 
             progressBar.Step = 1;
 
-            for (int i = 0; i <= 40; i++)
+            for (int i = 0; i <= 1400; i++)
             {
                 progressBar.PerformStep();
             }

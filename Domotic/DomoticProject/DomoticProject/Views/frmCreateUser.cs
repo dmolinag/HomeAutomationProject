@@ -1,40 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DomoticProject.Controllers;
-using DomoticProject.Logger;
 using DomoticProject.Controllers.LogicBusiness.Global;
-using DomoticProject.DTO;
 using DomoticProject.Model;
-using System.Text.RegularExpressions;
-
+using System.Drawing;
 
 namespace DomoticProject.Views
 {
-    public partial class CreateUser : Form
+    public partial class frmCreateUser : Form
     {
+        private static frmCreateUser _Request;
 
-        private static CreateUser _Request;
-
-        public static CreateUser GetRequest()
+        public static frmCreateUser GetRequest()
         {
             if (_Request == null || _Request.IsDisposed)
             {
-                _Request = new CreateUser();
+                _Request = new frmCreateUser();
             }
             _Request.BringToFront();
             return _Request;
         }
 
-        public CreateUser()
+        public frmCreateUser()
         {
             InitializeComponent();
+            this.Font = new Font("Segoe UI", 8);
+            this.Text = "Home Automation";
         }
 
         private void btnCreateUser_Click(object sender, EventArgs e)
@@ -124,9 +116,19 @@ namespace DomoticProject.Views
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            frmLogin frm = frmLogin.GetRequest();
+            frmManageUser frm = frmManageUser.GetRequest();
             frm.Show();
             this.Visible = false;
+        }
+
+        private void frmCreateUser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void frmCreateUser_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

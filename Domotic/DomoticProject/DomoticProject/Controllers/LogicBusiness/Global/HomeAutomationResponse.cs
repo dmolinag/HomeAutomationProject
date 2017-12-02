@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using DomoticProject.DTO;
+using DomoticProject.Controllers.DTO;
 
 namespace HomeAutomation.Response
 {
@@ -15,6 +15,19 @@ namespace HomeAutomation.Response
 
         [DataMember]
         public List<UserDto> ReturnValue { get; set; }
+    }
+
+    [DataContract(Name = "RoomDeviceResponse")]
+    public class RoomDeviceResponse
+    {
+        [DataMember]
+        public int Code { get; set; }
+
+        [DataMember]
+        public string Message { get; set; }
+
+        [DataMember]
+        public List<DeviceDTO> ReturnValue { get; set; }
     }
 }
 
@@ -60,7 +73,8 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
         Incorrect_password_or_username = -22,
         Not_permission_associated = -23,
         Utility_do_not_exist = -24,
-        Response_exceeds_the_maximum_registers = -25
+        Response_exceeds_the_maximum_registers = -25,
+        Device_at_the_same_state = -26
     }
 }
 

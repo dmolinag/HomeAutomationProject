@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DomoticProject.Views;
-using DomoticProject.Controllers;
-using System.Security.Cryptography;
 using DomoticProject.Controllers.LogicBusiness.Global;
-using DomoticProject.Model;
-using DomoticProject.DTO;
 using HomeAutomation.Response;
-using DomoticProject.Logger;
 
 namespace DomoticProject
 {
@@ -33,20 +22,18 @@ namespace DomoticProject
             _Request.BringToFront();
 
             return _Request;
-
         }
-
 
         public frmLogin()
         {
-            this.Font = new Font("Segoe UI", 8);
             InitializeComponent();
-            
+            this.Font = new Font("Segoe UI", 8);
+            this.Text = "Home Automation";
         }
 
         private void btnCreateUser_Click(object sender, EventArgs e)
         {
-            CreateUser frm = CreateUser.GetRequest();
+            frmCreateUser frm = frmCreateUser.GetRequest();
             frm.Show();
             this.Visible = false;
         }
@@ -83,7 +70,6 @@ namespace DomoticProject
                     return;
                 }
 
-
                 frmMain frm = frmMain.GetRequest();
                 frm.Show();
                 this.Visible = false;
@@ -114,6 +100,26 @@ namespace DomoticProject
         private void Form1_Load(object sender, EventArgs e)
         {
             this.ActiveControl = btnLogin;
+        }
+
+        private void btnFrench_Click(object sender, EventArgs e)
+        {
+            GlobalManager.Instance.Culture = "fr";
+        }
+
+        private void btnEspañol_Click(object sender, EventArgs e)
+        {
+            GlobalManager.Instance.Culture = "es";
+        }
+
+        private void btnEnglish_Click(object sender, EventArgs e)
+        {
+            GlobalManager.Instance.Culture = "eu";
+        }
+
+        private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

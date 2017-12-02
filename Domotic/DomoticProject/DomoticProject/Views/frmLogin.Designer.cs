@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtUsername = new System.Windows.Forms.TextBox();
-            this.btnCreateUser = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnFrench = new System.Windows.Forms.Button();
             this.btnEnglish = new System.Windows.Forms.Button();
@@ -90,26 +89,11 @@
             this.txtUsername.Text = "dmolinag92";
             this.txtUsername.Click += new System.EventHandler(this.txtUsername_Click);
             // 
-            // btnCreateUser
-            // 
-            this.btnCreateUser.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnCreateUser.Cursor = System.Windows.Forms.Cursors.AppStarting;
-            this.btnCreateUser.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnCreateUser.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnCreateUser.Location = new System.Drawing.Point(161, 183);
-            this.btnCreateUser.Name = "btnCreateUser";
-            this.btnCreateUser.Size = new System.Drawing.Size(100, 45);
-            this.btnCreateUser.TabIndex = 4;
-            this.btnCreateUser.Text = "Create User";
-            this.btnCreateUser.UseVisualStyleBackColor = false;
-            this.btnCreateUser.Click += new System.EventHandler(this.btnCreateUser_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnFrench);
             this.panel1.Controls.Add(this.btnEnglish);
             this.panel1.Controls.Add(this.btnEspañol);
-            this.panel1.Controls.Add(this.btnCreateUser);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnLogin);
             this.panel1.Controls.Add(this.txtPassword);
@@ -130,6 +114,7 @@
             this.btnFrench.TabIndex = 12;
             this.btnFrench.Text = "Fr";
             this.btnFrench.UseVisualStyleBackColor = true;
+            this.btnFrench.Click += new System.EventHandler(this.btnFrench_Click);
             // 
             // btnEnglish
             // 
@@ -137,8 +122,9 @@
             this.btnEnglish.Name = "btnEnglish";
             this.btnEnglish.Size = new System.Drawing.Size(28, 23);
             this.btnEnglish.TabIndex = 11;
-            this.btnEnglish.Text = "Us";
+            this.btnEnglish.Text = "Eu";
             this.btnEnglish.UseVisualStyleBackColor = true;
+            this.btnEnglish.Click += new System.EventHandler(this.btnEnglish_Click);
             // 
             // btnEspañol
             // 
@@ -148,6 +134,7 @@
             this.btnEspañol.TabIndex = 10;
             this.btnEspañol.Text = "Es";
             this.btnEspañol.UseVisualStyleBackColor = true;
+            this.btnEspañol.Click += new System.EventHandler(this.btnEspañol_Click);
             // 
             // btnLogin
             // 
@@ -155,7 +142,7 @@
             this.btnLogin.Cursor = System.Windows.Forms.Cursors.AppStarting;
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.btnLogin.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLogin.Location = new System.Drawing.Point(32, 183);
+            this.btnLogin.Location = new System.Drawing.Point(94, 182);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(100, 45);
             this.btnLogin.TabIndex = 3;
@@ -170,9 +157,11 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.panel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLogin_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -186,7 +175,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Button btnCreateUser;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnFrench;

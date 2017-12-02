@@ -19,6 +19,7 @@ namespace DomoticProject.Model
         {
             this.DeviceState = new HashSet<DeviceState>();
             this.RoomDevice = new HashSet<RoomDevice>();
+            this.DeviceOnTime = new HashSet<DeviceOnTime>();
         }
     
         public int DeviceID { get; set; }
@@ -31,5 +32,7 @@ namespace DomoticProject.Model
         public virtual ICollection<DeviceState> DeviceState { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoomDevice> RoomDevice { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeviceOnTime> DeviceOnTime { get; set; }
     }
 }

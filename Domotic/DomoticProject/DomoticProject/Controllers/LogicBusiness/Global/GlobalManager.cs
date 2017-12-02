@@ -31,12 +31,13 @@ namespace DomoticProject.Controllers.LogicBusiness.Global
 
         // User data
         public String Email { get; set; }
+        public int? UserId { get; set; }
         public String Username { get; set; }
         public String Password { get; set; }
         public String Name { get; set; }
         public String Lastname { get; set; }
         public String Culture { get; set; }
-        public DateTime LoginDate { get; set; }
+        public DateTime? LoginDate { get; set; }
         //Minimum and maximun db version that works with the app.
         public Version MinDatabaseVersion { get; set; }
         public Version MaxDatabaseVersion { get; set; }

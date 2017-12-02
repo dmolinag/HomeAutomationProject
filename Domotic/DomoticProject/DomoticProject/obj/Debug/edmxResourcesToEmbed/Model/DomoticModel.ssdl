@@ -9,6 +9,19 @@
     <Property Name="UnitID" Type="int" />
     <Property Name="TimeOn" Type="int" />
   </EntityType>
+  <EntityType Name="DeviceOnTime">
+    <Key>
+      <PropertyRef Name="DeviceOnTimeID" />
+    </Key>
+    <Property Name="DeviceOnTimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="DeviceID" Type="int" Nullable="false" />
+    <Property Name="OnTime" Type="datetime2" Precision="0" Nullable="false" />
+    <Property Name="OffTime" Type="datetime2" Precision="0" />
+    <Property Name="OnTimeDuration" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="OnUserID" Type="int" />
+    <Property Name="OffUserID" Type="int" />
+  </EntityType>
   <EntityType Name="DeviceState">
     <Key>
       <PropertyRef Name="DeviceStateId" />
@@ -43,7 +56,6 @@
     <Property Name="StateID" Type="int" Nullable="false" />
     <Property Name="Value" Type="int" />
     <Property Name="UnitID" Type="int" />
-    <Property Name="OnTime" Type="datetime2" Precision="7" />
   </EntityType>
   <EntityType Name="State">
     <Key>
@@ -107,6 +119,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DeviceOnTime_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="DeviceOnTime">
+        <PropertyRef Name="OnUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeviceOnTime_User1">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="DeviceOnTime">
+        <PropertyRef Name="OffUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DeviceState_Device">
     <End Role="Device" Type="Self.Device" Multiplicity="1" />
     <End Role="DeviceState" Type="Self.DeviceState" Multiplicity="*" />
@@ -128,6 +164,30 @@
       </Principal>
       <Dependent Role="DeviceState">
         <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeviceTimeOn_Device">
+    <End Role="Device" Type="Self.Device" Multiplicity="1" />
+    <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Device">
+        <PropertyRef Name="DeviceID" />
+      </Principal>
+      <Dependent Role="DeviceOnTime">
+        <PropertyRef Name="DeviceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeviceTimeOn_Room">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="DeviceOnTime" Type="Self.DeviceOnTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="RoomID" />
+      </Principal>
+      <Dependent Role="DeviceOnTime">
+        <PropertyRef Name="RoomID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -183,11 +243,16 @@
     <Parameter Name="RoomID" Type="int" Mode="In" />
     <Parameter Name="DeviceID" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetDeviceOnTimeByRoomIdAndDeviceID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RoomID" Type="int" Mode="In" />
+    <Parameter Name="DeviceID" Type="int" Mode="In" />
+  </Function>
   <Function Name="GetDevicesByRoomId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="RoomID" Type="int" Mode="In" />
   </Function>
   <EntityContainer Name="HomeAutomationModelStoreContainer">
     <EntitySet Name="Device" EntityType="Self.Device" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeviceOnTime" EntityType="Self.DeviceOnTime" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeviceState" EntityType="Self.DeviceState" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
@@ -201,6 +266,14 @@
       <End Role="Unit" EntitySet="Unit" />
       <End Role="Device" EntitySet="Device" />
     </AssociationSet>
+    <AssociationSet Name="FK_DeviceOnTime_User" Association="Self.FK_DeviceOnTime_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeviceOnTime_User1" Association="Self.FK_DeviceOnTime_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+    </AssociationSet>
     <AssociationSet Name="FK_DeviceState_Device" Association="Self.FK_DeviceState_Device">
       <End Role="Device" EntitySet="Device" />
       <End Role="DeviceState" EntitySet="DeviceState" />
@@ -208,6 +281,14 @@
     <AssociationSet Name="FK_DeviceState_State" Association="Self.FK_DeviceState_State">
       <End Role="State" EntitySet="State" />
       <End Role="DeviceState" EntitySet="DeviceState" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeviceTimeOn_Device" Association="Self.FK_DeviceTimeOn_Device">
+      <End Role="Device" EntitySet="Device" />
+      <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeviceTimeOn_Room" Association="Self.FK_DeviceTimeOn_Room">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="DeviceOnTime" EntitySet="DeviceOnTime" />
     </AssociationSet>
     <AssociationSet Name="FK_RoomDevice_Device" Association="Self.FK_RoomDevice_Device">
       <End Role="Device" EntitySet="Device" />

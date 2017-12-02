@@ -112,7 +112,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\DTO\DevicesDTO.cs" />
+    <Compile Include="Controllers\DTO\DeviceDTO.cs" />
+    <Compile Include="Controllers\DTO\DeviceOnTimeDTO.cs" />
+    <Compile Include="Controllers\DTO\DevicesDTOPartial.cs" />
     <Compile Include="Controllers\LogicBusiness\Global\DomoticService.cs" />
     <Compile Include="Controllers\LogicBusiness\Global\GlobalManager.cs" />
     <Compile Include="Controllers\LogicBusiness\Global\HomeAutomationResponse.cs" />
@@ -120,10 +122,14 @@
     <Compile Include="Controllers\LogicBusiness\Global\PasswordSecurity.cs" />
     <Compile Include="Controllers\LogicBusiness\Global\Security.cs" />
     <Compile Include="Controllers\LogicBusiness\Global\UserKeyPair.cs" />
+    <Compile Include="Controllers\LogicBusiness\RoomDeviceUpdate.cs" />
     <Compile Include="Controllers\Queries\DeviceController.cs" />
     <Compile Include="Controllers\Queries\UserController.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Model\Device.cs">
+      <DependentUpon>DomoticModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DeviceOnTime.cs">
       <DependentUpon>DomoticModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DeviceState.cs">
@@ -146,6 +152,9 @@
     </Compile>
     <Compile Include="Controllers\DTO\UserDto.cs" />
     <Compile Include="Model\GetDeviceByRoomIdAndDeviceID_Result.cs">
+      <DependentUpon>DomoticModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\GetDeviceOnTimeByRoomIdAndDeviceID_Result.cs">
       <DependentUpon>DomoticModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GetDevicesByRoomId_Result.cs">
@@ -172,11 +181,17 @@
     <Compile Include="Model\UserRole.cs">
       <DependentUpon>DomoticModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateUser.cs">
+    <Compile Include="Views\frmCreateUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\CreateUser.Designer.cs">
-      <DependentUpon>CreateUser.cs</DependentUpon>
+    <Compile Include="Views\frmCreateUser.Designer.cs">
+      <DependentUpon>frmCreateUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmEditUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmEditUser.Designer.cs">
+      <DependentUpon>frmEditUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\frmSplash.cs">
       <SubType>Form</SubType>
@@ -184,37 +199,52 @@
     <Compile Include="Views\frmSplash.Designer.cs">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\LibiasRoom.cs">
+    <Compile Include="Views\frmRoomControls.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\LibiasRoom.Designer.cs">
-      <DependentUpon>LibiasRoom.cs</DependentUpon>
+    <Compile Include="Views\frmRoomControls.Designer.cs">
+      <DependentUpon>frmRoomControls.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Login.cs">
+    <Compile Include="Views\frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
+    <Compile Include="Views\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Main.cs">
+    <Compile Include="Views\frmRooms.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
+    <Compile Include="Views\frmRooms.Designer.cs">
+      <DependentUpon>frmRooms.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\CreateUser.resx">
-      <DependentUpon>CreateUser.cs</DependentUpon>
+    <Compile Include="Views\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmManageUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\frmManageUser.Designer.cs">
+      <DependentUpon>frmManageUser.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\frmCreateUser.resx">
+      <DependentUpon>frmCreateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmEditUser.resx">
+      <DependentUpon>frmEditUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\frmSplash.resx">
       <DependentUpon>frmSplash.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LibiasRoom.resx">
-      <DependentUpon>LibiasRoom.cs</DependentUpon>
+    <EmbeddedResource Include="Views\frmRoomControls.resx">
+      <DependentUpon>frmRoomControls.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="Views\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -226,8 +256,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
+    <EmbeddedResource Include="Views\frmRooms.resx">
+      <DependentUpon>frmRooms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmManageUser.resx">
+      <DependentUpon>frmManageUser.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="Model\DomoticModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

@@ -14,6 +14,7 @@ namespace DomoticProject.Views
     public partial class frmMain : Form
     {
         public LocalizationManager localizationManager = LocalizationManager.Instance;
+        static String profileName = "(Main)";
 
         private static frmMain _Request;
 
@@ -25,33 +26,24 @@ namespace DomoticProject.Views
             }
             _Request.BringToFront();
 
-
             return _Request;
-
         }
 
         public frmMain()
         {
-            if (GlobalManager.Instance.Culture != null) localizationManager.SetCulture(GlobalManager.Instance.Culture);
-
             frmSplash frm = frmSplash.GetRequest();
             frm.Show();
-
+            frm.Visible = false;
             InitializeComponent();
             this.Font = new Font("Segoe UI", 8);
-            this.Text = "Home Automation - " + GlobalManager.Instance.Name + " " + GlobalManager.Instance.Lastname;
+            this.Text = "Home Automation";
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private void Main2_Load(object sender, EventArgs e)
         {
+            if (GlobalManager.Instance.Culture != null) localizationManager.SetCulture(GlobalManager.Instance.Culture);
 
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmLogin frm = frmLogin.GetRequest();
-            frm.Show();
-            this.Visible = false;
+            this.lblUsernameLabel.Text = "Active user: " + GlobalManager.Instance.Name + " " + GlobalManager.Instance.Lastname;
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -59,9 +51,23 @@ namespace DomoticProject.Views
             Application.Exit();
         }
 
-        private void btnLibiasRoom_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
-            LibiasRoom frm = LibiasRoom.GetRequest();
+            frmLogin frm = frmLogin.GetRequest();
+            frm.Show();
+            this.Dispose();
+        }
+
+        private void btnRooms_Click(object sender, EventArgs e)
+        {
+            frmRooms frm = frmRooms.GetRequest();
+            frm.Show();
+            this.Visible = false;
+        }
+
+        private void btnManageUser_Click(object sender, EventArgs e)
+        {
+            frmManageUser frm = frmManageUser.GetRequest();
             frm.Show();
             this.Visible = false;
         }
